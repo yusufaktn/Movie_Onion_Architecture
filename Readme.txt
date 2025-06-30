@@ -1,0 +1,55 @@
+﻿CQRS 
+
+-Ana odağı write ve read sorumluluklarının ayrılmasıdır.
+-Read tarafı sadece veri okur, yazma işlemi yapmaz.
+-Write tarafı ise sadece veri yazar, okuma işlemi yapmaz.
+-İki ayrı domain olarak düşünülür.Buradaki domain alan adı değildir.
+-CQRS , Command Query Responsibility Segregation anlamına gelir.
+-CQRS, yazma ve okuma işlemlerini ayırarak sistemin karmaşıklığını azaltmayı ve ölçeklenebilirliğini artırmayı amaçlar.
+-Olası bir servis kesintisinde, okuma tarafı çalışmaya devam edebilir veya  yazma tarafı çalışmaya devam edebilir.
+
+Onion Architecture
+-Onion Architecture, uygulama mimarisinde bağımlılıkları tersine çevirerek, iş mantığını ve domain modelini dış katmanlardan izole etmeyi amaçlar.
+-Temel prensibi, uygulamanın iç katmanlarının dış katmanlara bağımlı olmaması ve dış katmanların iç katmanlara bağımlı olmasıdır.
+-İç katmanlar, iş mantığını ve domain modelini içerirken, dış katmanlar veri erişimi, kullanıcı arayüzü ve diğer altyapı bileşenlerini içerir.
+
+Core (Çekirdek)
+1. Domain
+
+Ne işe yarar?
+Uygulamanın kalbidir. Entity'ler, value object'ler, interface'ler (örneğin repository interface'leri) burada bulunur.
+
+💡 Saf C# kodudur, hiçbir dış kütüphaneye bağımlı olmamalıdır.
+
+2. Application
+
+Ne işe yarar?
+İş kurallarını ve uygulama akışını barındırır. Use case'ler (örneğin: film ekle, film sil), servis interface'leri burada olur.
+
+Application layer, Domain'e bağlıdır ama dış katmanlara bağımlı değildir.
+
+🔸 Infrastructure (Altyapı)
+3. Persistence
+
+Ne işe yarar?
+Veritabanı ile ilgili teknik detayların uygulandığı yerdir.
+
+Repository interface’lerinin implementasyonları burada yer alır.
+
+Entity Framework gibi ORM araçları burada kullanılır.
+
+🔸 Presentation
+4. Api
+
+Ne işe yarar?
+Kullanıcıdan veya başka sistemlerden gelen HTTP isteklerini karşılayan katmandır.
+
+Controller'lar burada yer alır.
+
+Genelde ASP.NET Core Web API projesidir.
+
+🔸 Frontends (isteğe bağlı)
+Ne işe yarar?
+Eğer projede frontend (örneğin Blazor, React) kullanılıyorsa bu klasörde yer alır.
+
+Sunum arayüzlerini içerir.
