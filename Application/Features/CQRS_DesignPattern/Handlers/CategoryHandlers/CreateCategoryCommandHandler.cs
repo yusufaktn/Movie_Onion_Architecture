@@ -17,7 +17,7 @@ namespace Application.Features.CQRS_DesignPattern.Handlers.CategoryHandlers
             _context = context;
         }
 
-        public async void Handle(CreateCategoryCommand command)
+        public async Task Handle(CreateCategoryCommand command)
         {
             _context.Categories.Add(new Category
             {

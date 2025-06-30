@@ -10,5 +10,10 @@ namespace Application.Features.CQRS_DesignPattern.Queries.CategoryQueries
     {
         public int CategoryId { get; set; }
         
+
+        public GetCategoryByIdQuery(int categoryId)
+        {
+            CategoryId = categoryId;
+        }
     }
 }

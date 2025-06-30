@@ -17,16 +17,16 @@ namespace Application.Features.CQRS_DesignPattern.Handlers.MovieHandlers
 
         }
 
-        public async void Handle(DeleteMovieCommand deleteMovieCommand)
+        public async Task Handle(DeleteMovieCommand deleteMovieCommand)
         {
             var value = await _context.Movies.FindAsync(deleteMovieCommand.MovieId);
-            if (value != null)
+            if (value == null)
             {
                 throw new Exception("Not Found Delete Movie");
+                
             }
             _context.Movies.Remove(value);
             await _context.SaveChangesAsync();
-
 
 
         }

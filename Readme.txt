@@ -9,47 +9,63 @@
 -Olası bir servis kesintisinde, okuma tarafı çalışmaya devam edebilir veya  yazma tarafı çalışmaya devam edebilir.
 
 Onion Architecture
+
 -Onion Architecture, uygulama mimarisinde bağımlılıkları tersine çevirerek, iş mantığını ve domain modelini dış katmanlardan izole etmeyi amaçlar.
 -Temel prensibi, uygulamanın iç katmanlarının dış katmanlara bağımlı olmaması ve dış katmanların iç katmanlara bağımlı olmasıdır.
 -İç katmanlar, iş mantığını ve domain modelini içerirken, dış katmanlar veri erişimi, kullanıcı arayüzü ve diğer altyapı bileşenlerini içerir.
 
 Core (Çekirdek)
-1. Domain
+	1. Domain
 
-Ne işe yarar?
-Uygulamanın kalbidir. Entity'ler, value object'ler, interface'ler (örneğin repository interface'leri) burada bulunur.
+	Ne işe yarar?
+	Uygulamanın kalbidir. Entity'ler, value object'ler, interface'ler (örneğin repository interface'leri) burada bulunur.
 
 💡 Saf C# kodudur, hiçbir dış kütüphaneye bağımlı olmamalıdır.
 
-2. Application
+	2. Application
 
-Ne işe yarar?
-İş kurallarını ve uygulama akışını barındırır. Use case'ler (örneğin: film ekle, film sil), servis interface'leri burada olur.
+	Ne işe yarar?
+	İş kurallarını ve uygulama akışını barındırır. Use case'ler (örneğin: film ekle, film sil), servis interface'leri burada olur.
 
-Application layer, Domain'e bağlıdır ama dış katmanlara bağımlı değildir.
+	Application layer, Domain'e bağlıdır ama dış katmanlara bağımlı değildir.
 
 🔸 Infrastructure (Altyapı)
-3. Persistence
+	3. Persistence
 
-Ne işe yarar?
-Veritabanı ile ilgili teknik detayların uygulandığı yerdir.
+	Ne işe yarar?
+	Veritabanı ile ilgili teknik detayların uygulandığı yerdir.
 
-Repository interface’lerinin implementasyonları burada yer alır.
+	Repository interface’lerinin implementasyonları burada yer alır.
 
-Entity Framework gibi ORM araçları burada kullanılır.
+	Entity Framework gibi ORM araçları burada kullanılır.
 
 🔸 Presentation
-4. Api
+	4. Api
+	
+	Ne işe yarar?
+	Kullanıcıdan veya başka sistemlerden gelen HTTP isteklerini karşılayan katmandır.
 
-Ne işe yarar?
-Kullanıcıdan veya başka sistemlerden gelen HTTP isteklerini karşılayan katmandır.
+	Controller'lar burada yer alır.
 
-Controller'lar burada yer alır.
-
-Genelde ASP.NET Core Web API projesidir.
+	Genelde ASP.NET Core Web API projesidir.
 
 🔸 Frontends (isteğe bağlı)
-Ne işe yarar?
-Eğer projede frontend (örneğin Blazor, React) kullanılıyorsa bu klasörde yer alır.
+	Ne işe yarar?
+	Eğer projede frontend (örneğin Blazor, React) kullanılıyorsa bu klasörde yer alır.
+	Sunum arayüzlerini içerir.
 
-Sunum arayüzlerini içerir.
+
+
+AddScoped , AddSingleton ,AddTransient
+
+-AddScoped: "Her kullanıcı isteğinde bir tane oluştur, sonra sil."
+
+-AddSingleton: "Uygulama açıldığında bir tane oluştur, hep onu kullan."
+
+-AddTransient: "Her kullanımda yeni oluştur."
+
+-Mesela, CreateMovieCommandHandler içinde geçici olarak tutulan veriler (örn. işlem sırasında toplanan bilgiler) sadece o kullanıcı isteğine özel olur.
+
+-Eğer Singleton olsaydı, bütün kullanıcılar aynı örneği paylaşırdı, ki bu istenmeyen karışıklıklara neden olur.
+
+-Eğer Transient olsaydı, her kullanımda yeni örnek olur, bazen da yönetilmesi zor olabilir.

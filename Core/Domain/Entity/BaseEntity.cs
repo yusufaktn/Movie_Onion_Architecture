@@ -16,6 +16,7 @@ namespace Domain.Entity
         {
             CreatedDate = DateTime.UtcNow;
             UpdatedDate = DateTime.UtcNow;
+            Status = true;
         }
         public void Update()
         {
