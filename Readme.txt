@@ -69,3 +69,11 @@ AddScoped , AddSingleton ,AddTransient
 -Eğer Singleton olsaydı, bütün kullanıcılar aynı örneği paylaşırdı, ki bu istenmeyen karışıklıklara neden olur.
 
 -Eğer Transient olsaydı, her kullanımda yeni örnek olur, bazen da yönetilmesi zor olabilir.
+
+
+Mediator:
+
+Mediator (Arabulucu) Tasarım Deseni, nesneler arasındaki karmaşık iletişimi merkezi bir arabulucu nesnesi üzerinden yönetir. 
+Böylece nesneler doğrudan birbirleriyle iletişim kurmak yerine, arabulucuya mesaj gönderir ve arabulucu bu mesajı ilgili nesneye iletir. 
+Bu desen, nesneler arasındaki bağımlılığı azaltır, kodun okunabilirliğini ve bakımını kolaylaştırır. 
+Özellikle çok sayıda nesnenin birbiriyle etkileşimde olduğu durumlarda tercih edilir.
