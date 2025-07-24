@@ -1,4 +1,4 @@
-﻿using Application.Features.MediatorDesignPattern.Command;
+﻿using Application.Features.MediatorDesignPattern.Command.CastCommand;
 using Domain.Entity;
 using MediatR;
 using Persistence.Context;

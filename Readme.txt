@@ -8,6 +8,17 @@
 -CQRS, yazma ve okuma işlemlerini ayırarak sistemin karmaşıklığını azaltmayı ve ölçeklenebilirliğini artırmayı amaçlar.
 -Olası bir servis kesintisinde, okuma tarafı çalışmaya devam edebilir veya  yazma tarafı çalışmaya devam edebilir.
 
+
+Command → işlem
+
+Query → veri çekme
+
+Handler → işi yapan yer
+
+Result → gelen veri/Geriye dönen Response
+
+
+
 Onion Architecture
 
 -Onion Architecture, uygulama mimarisinde bağımlılıkları tersine çevirerek, iş mantığını ve domain modelini dış katmanlardan izole etmeyi amaçlar.
