@@ -2,8 +2,10 @@
 using Application.Features.CQRS_DesignPattern.Command.CategoryCommand;
 using Application.Features.CQRS_DesignPattern.Handlers.CategoryHandlers;
 using Application.Features.CQRS_DesignPattern.Handlers.MovieHandlers;
+using Application.Features.MediatorDesignPattern.Handlers.TagHandlers;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Persistence.Context;
+using System.Reflection;
 
 namespace Api
 {
@@ -26,6 +28,8 @@ namespace Api
             builder.Services.AddScoped<UpdateCategoryCommandHandler>();
             builder.Services.AddScoped<GetCategoryByIdQueryHandler>();
             builder.Services.AddScoped<GetCategoryQueryHandler>();
+
+            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetTagQueryHandler).Assembly));
             
 
             builder.Services.AddControllers();
