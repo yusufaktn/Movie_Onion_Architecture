@@ -16,6 +16,7 @@ namespace Api
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<MyContext>();
+            builder.Services.AddHttpClient();
 
             builder.Services.AddScoped<CreateMovieCommandHandler>();
             builder.Services.AddScoped<DeleteMovieCommandHandler>();

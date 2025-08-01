@@ -1,0 +1,49 @@
+﻿@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7 no-js" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8 no-js" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en" class="no-js">
+
+<!-- movielist07:38-->
+@await Component.InvokeAsync("_UserUILayoutHeadComponentPartial")
+<body>
+	<!--preloading-->
+	@await Component.InvokeAsync("_UserUILayoutPreloaderComponentPartial")
+	<!--end of preloading-->
+	<!--login form popup-->
+	<div class="login-wrapper" id="login-content">
+		@await Component.InvokeAsync("_UserUILayoutLoginCompanentPartial")
+	</div>
+	<!--end of login form popup-->
+	<!--signup form popup-->
+	<div class="login-wrapper" id="signup-content">
+		@await Component.InvokeAsync("_UserUILayoutRegisterComponentPartial")
+	</div>
+	<!--end of signup form popup-->
+	<!-- BEGIN | Header -->
+	<header class="ht-header">
+		@await Component.InvokeAsync("_UserUILayoutNavbarComponentPartial")
+	</header>
+	<!-- END | Header -->
+		@await Component.InvokeAsync("_UserUILayoutHeroComponentPartial")
+	@RenderBody()
+	<!-- footer section-->
+	@await Component.InvokeAsync("_UserUILayoutFooterComponentPartial")
+	<!-- end of footer section-->
+
+	<script src="/Film-Review-Movie-Database/js/jquery.js"></script>
+	<script src="/Film-Review-Movie-Database/js/plugins.js"></script>
+	<script src="/Film-Review-Movie-Database/js/plugins2.js"></script>
+	<script src="/Film-Review-Movie-Database/js/custom.js"></script>
+</body>
+
+<!-- movielist07:38-->
+</html>

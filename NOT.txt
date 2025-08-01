@@ -1,0 +1,11 @@
+View Components :
+ - ASP.NET CORE'da sayfalarýn belirli bölümlerini yeniden kullanýlabilir parçalar halinde oluþturmamýza olanak tanýyan bir özelliktir.
+ -Kendi Controller ve Views yapýsýna sahip olur buda baðýmsýzlýðý beraberinde getirir.
+ -Ýþ mantýðý ve görünümü birbirinden ayýrýr.
+
+Oluþturma:
+-Controller içine bir UserUILayoutController oluþturduk. Ardýndan view oluþturduk. Views içine UserUILayout klasörü oluþmuþ oldu.
+-Daha sonra ViewComponents adýnda bir klasör oluþturup içinede UserUILayoutViewComponents klasörü oluturduk. Bu klasör içine isimlendirme kurallarýna uyarak partial sýnfýmýzý oluþturduk.
+-View Componentler default olarak bir yolun içinde aranýyor onuda Shared içine Components klasörü oluþturarak ve oluþturcaðýmmýz view'i temsil eden class ile ayný olmalý.
+
+
