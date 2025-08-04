@@ -1,10 +1,13 @@
 
+using Api.Controllers.Movies;
 using Application.Features.CQRS_DesignPattern.Command.CategoryCommand;
 using Application.Features.CQRS_DesignPattern.Handlers.CategoryHandlers;
 using Application.Features.CQRS_DesignPattern.Handlers.MovieHandlers;
 using Application.Features.MediatorDesignPattern.Handlers.TagHandlers;
+using ExternalService.Service;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Persistence.Context;
+using Persistence.Interface;
 using System.Reflection;
 
 namespace Api
@@ -16,7 +19,7 @@ namespace Api
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<MyContext>();
-            builder.Services.AddHttpClient();
+            
 
             builder.Services.AddScoped<CreateMovieCommandHandler>();
             builder.Services.AddScoped<DeleteMovieCommandHandler>();
@@ -29,6 +32,10 @@ namespace Api
             builder.Services.AddScoped<UpdateCategoryCommandHandler>();
             builder.Services.AddScoped<GetCategoryByIdQueryHandler>();
             builder.Services.AddScoped<GetCategoryQueryHandler>();
+            builder.Services.AddScoped<IExternalApiService, ExternalApiService>();
+            builder.Services.AddHttpClient<IExternalApiService, ExternalApiService>();
+
+
 
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetTagQueryHandler).Assembly));
             

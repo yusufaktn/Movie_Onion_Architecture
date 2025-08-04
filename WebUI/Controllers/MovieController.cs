@@ -21,11 +21,24 @@ namespace WebUI.Controllers
             ViewBag.v3 = "Tüm Filmler";
 
             var client = _httpClientFactory.CreateClient();
-            var reponse = await client.GetAsync("https://localhost:7269/api/Movies");
-            if (reponse.IsSuccessStatusCode)
+            var response = await client.GetAsync("https://localhost:7269/api/Movies");
+            if (response.IsSuccessStatusCode)
             {
-                var jsondata = await reponse.Content.ReadAsStringAsync();
+                var jsondata = await response.Content.ReadAsStringAsync();
                 var value =  JsonConvert.DeserializeObject<List<ResponseMovieDto>>(jsondata);
+                return View(value);
+            }
+            return View();
+        }
+
+        public async Task<IActionResult> GetGenreList()
+        {
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync("https://localhost:7269/api/GetGenres");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsondata = await response.Content.ReadAsStringAsync();
+                var value = JsonConvert.DeserializeObject<List<ResponseMovieDto>>(jsondata);
                 return View(value);
             }
             return View();
