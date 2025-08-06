@@ -31,17 +31,17 @@ namespace WebUI.Controllers
             return View();
         }
 
-        public async Task<IActionResult> GetGenreList()
-        {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7269/api/GetGenres");
-            if (response.IsSuccessStatusCode)
-            {
-                var jsondata = await response.Content.ReadAsStringAsync();
-                var value = JsonConvert.DeserializeObject<List<ResponseMovieDto>>(jsondata);
-                return View(value);
-            }
-            return View();
-        }
+        //public async Task<IActionResult> GetGenreList()
+        //{
+        //    var client = _httpClientFactory.CreateClient();
+        //    var response = await client.GetAsync("https://localhost:7269/api/GetGenres");
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        var jsondata = await response.Content.ReadAsStringAsync();
+        //        var value = JsonConvert.DeserializeObject<List<ResponseMovieDto>>(jsondata);
+        //        return View(value);
+        //    }
+        //    return View();
+        //}
     }
 }

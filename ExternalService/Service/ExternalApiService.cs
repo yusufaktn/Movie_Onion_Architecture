@@ -31,26 +31,32 @@ namespace ExternalService.Service
             _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_apiKey}");
         }
 
-        public async Task<List<ExternalGenreDto>> GetMovieList() 
+        public async Task<List<ExternalGenreDto>> GetMovieList()
         {
             try
-            {             
+            {
+                // TMDB API'sinden film türlerini almak için GET isteği gönderiyoruz
                 var response = await _httpClient.GetAsync("genre/movie/list?language=tr");
 
+                // Eğer API isteği başarılıysa
                 if (response.IsSuccessStatusCode)
                 {
+                    // API'den dönen JSON verisini string olarak okuyoruz
                     var json = await response.Content.ReadAsStringAsync();
+
+                    // JSON verisini ExternelGenreResponseDto tipine deserialize ediyoruz
                     var genreResponse = JsonConvert.DeserializeObject<ExternelGenreResponseDto>(json);
+
+                    // Eğer genreResponse null değilse tür listesini, null ise boş bir liste döndürüyoruz
                     return genreResponse?.genres ?? new List<ExternalGenreDto>();
                 }
 
-                // API çağrısı başarısız olursa log yaz ve boş liste döndür
+                // API çağrısı başarısız olursa log yazabiliriz ve boş liste döndürüyoruz
                 return new List<ExternalGenreDto>();
             }
             catch (Exception ex)
             {
-                // Hata durumunda log yaz
-                // _logger.LogError(ex, "Error fetching movie genres");
+                // Hata durumunda log yazabiliriz ve boş liste döndürüyoruz              
                 return new List<ExternalGenreDto>();
             }
         }

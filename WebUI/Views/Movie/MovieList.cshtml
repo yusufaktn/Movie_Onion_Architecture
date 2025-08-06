@@ -1,5 +1,6 @@
 ﻿@model List<DTO.MovieDTO.ResponseMovieDto>
 
+
 @{
     ViewData["Title"] = "MovieList";
     Layout = "~/Views/UserUILayout/LayoutUI.cshtml";
@@ -64,19 +65,7 @@
                                     <label>Film adı</label>
                                     <input type="text" placeholder="Anahtar kelime girin">
                                 </div>
-                                <div class="col-md-12 form-it">
-                                    <label>Türler & Alt Türler</label>
-                                    <div class="group-ip">
-                                        <select name="skills" multiple="" class="ui fluid dropdown">
-                                            <option value="">Türleri filtrelemek için yazın</option>
-                                            <option value="Action1">Aksiyon 1</option>
-                                            <option value="Action2">Aksiyon 2</option>
-                                            <option value="Action3">Aksiyon 3</option>
-                                            <option value="Action4">Aksiyon 4</option>
-                                            <option value="Action5">Aksiyon 5</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                @await Component.InvokeAsync("_UserUIMovieGenreListComponentsPartial");
                                 <div class="col-md-12 form-it">
                                     <label>Puan Aralığı</label>
                                     <select>

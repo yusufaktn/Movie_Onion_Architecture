@@ -1,0 +1,14 @@
+﻿@model List<DTO.ExternalMovieDto.ExternalGenreDto>
+
+<div class="col-md-12 form-it">
+    <label>Türler & Alt Türler</label>
+    <div class="group-ip">
+        <select name="skills" multiple="" class="ui fluid dropdown">
+            <option value="">Türleri filtrelemek için yazın</option>
+            @foreach(var i in Model)
+            {
+                <option value="Action1">@i.name</option>
+            }         
+        </select>
+    </div>
+</div>
