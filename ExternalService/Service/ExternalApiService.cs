@@ -1,4 +1,5 @@
-﻿using DTO.ExternalMovieDto;
+﻿using DTO.ExternalApiDto.Genre;
+using DTO.ExternalApiDto.Movie;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Persistence.Interface;
@@ -31,7 +32,7 @@ namespace ExternalService.Service
             _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_apiKey}");
         }
 
-        public async Task<List<ExternalGenreDto>> GetMovieList()
+        public async Task<List<ExternalGenreDto>> GetGenreList()
         {
             try
             {
@@ -58,6 +59,26 @@ namespace ExternalService.Service
             {
                 // Hata durumunda log yazabiliriz ve boş liste döndürüyoruz              
                 return new List<ExternalGenreDto>();
+            }
+        }
+
+        public async Task<List<ExternalMovieDto>> GetMovieList(int page)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"movie/top_rated?language=tr-TR&page={page}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var value = JsonConvert.DeserializeObject<ExternalMovieResponseDto>(json);
+                    return value?.results ?? new List<ExternalMovieDto>();
+                }
+                return new List<ExternalMovieDto>();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Hata",ex);
+                return new List<ExternalMovieDto>();
             }
         }
     }

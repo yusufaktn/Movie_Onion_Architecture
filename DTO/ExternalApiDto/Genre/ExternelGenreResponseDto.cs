@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DTO.ExternalMovieDto
+namespace DTO.ExternalApiDto.Genre
 {
     public class ExternelGenreResponseDto
     {

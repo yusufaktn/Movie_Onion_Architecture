@@ -1,4 +1,4 @@
-﻿using DTO.MovieDTO;
+﻿using DTO.ExternalApiDto.Movie;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -21,27 +21,15 @@ namespace WebUI.Controllers
             ViewBag.v3 = "Tüm Filmler";
 
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7269/api/Movies");
+            var response = await client.GetAsync("https://localhost:7269/api/ExternalMovieApi/GetMovie");
             if (response.IsSuccessStatusCode)
             {
                 var jsondata = await response.Content.ReadAsStringAsync();
-                var value =  JsonConvert.DeserializeObject<List<ResponseMovieDto>>(jsondata);
+                var value =  JsonConvert.DeserializeObject<List<ExternalMovieDto>>(jsondata);
                 return View(value);
             }
             return View();
         }
 
-        //public async Task<IActionResult> GetGenreList()
-        //{
-        //    var client = _httpClientFactory.CreateClient();
-        //    var response = await client.GetAsync("https://localhost:7269/api/GetGenres");
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        var jsondata = await response.Content.ReadAsStringAsync();
-        //        var value = JsonConvert.DeserializeObject<List<ResponseMovieDto>>(jsondata);
-        //        return View(value);
-        //    }
-        //    return View();
-        //}
     }
 }

@@ -1,4 +1,4 @@
-﻿using DTO.ExternalMovieDto;
+﻿using DTO.ExternalApiDto.Genre;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 

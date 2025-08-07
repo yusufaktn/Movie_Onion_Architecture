@@ -1,4 +1,4 @@
-﻿@model List<DTO.MovieDTO.ResponseMovieDto>
+﻿@model List<DTO.ExternalApiDto.Movie.ExternalMovieDto>
 
 
 @{
@@ -29,10 +29,10 @@
                     <div class="movie-item-style-2">
                         <img src="/Film-Review-Movie-Database/images/uploads/mv1.jpg" alt="">
                         <div class="mv-item-infor">
-                            <h6><a href="moviesingle.html">@i.Title <span>(@i.CreatedYear)</span></a></h6>
-                            <p class="rate"><i class="ion-android-star"></i><span>@i.Rating</span> /10</p>
-                            <p class="describe">@i.Description</p>
-                            <p class="run-time"> @i.Duration’    .     <span>MMPA: PG-13 </span>    .     <span>@i.ReleaseDate</span></p>
+                            <h6><a href="moviesingle.html">@i.title <span>(@i.release_date)</span></a></h6>
+                            <p class="rate"><i class="ion-android-star"></i><span>@i.vote_average</span> /10</p>
+                            <p class="describe">@i.overview</p>
+                            <p class="run-time"> @i.vote_average’    .     <span>MMPA: PG-13 </span>    .     <span>@i.release_date</span></p>
                             <p>Director: <a href="#">Joss Whedon</a></p>
                             <p>Stars: <a href="#">Robert Downey Jr.,</a> <a href="#">Chris Evans,</a> <a href="#">  Chris Hemsworth</a></p>
                         </div>

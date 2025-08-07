@@ -22,5 +22,12 @@ namespace Api.Controllers.ExternalMovieApiController
             var genres = await _mediator.Send(new GetGenresListQuery());
             return Ok(genres);
         }
+
+        [HttpGet("GetMovie")]
+        public async Task<IActionResult> GetMovie()
+        {
+            var movie = await _mediator.Send(new GetMovieListQuery());
+            return Ok(movie);
+        }
     }
 }

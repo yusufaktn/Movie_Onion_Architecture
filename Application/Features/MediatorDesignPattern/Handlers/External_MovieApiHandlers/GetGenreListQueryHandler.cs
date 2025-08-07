@@ -1,6 +1,8 @@
 ﻿using Application.Features.MediatorDesignPattern.Queries.External_MovieApiQueries;
-using DTO.ExternalMovieDto;
+using DTO.ExternalApiDto.Genre;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Persistence.Context;
 using Persistence.Interface;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ namespace Application.Features.MediatorDesignPattern.Handlers.External_MovieApiH
     public class GetGenreListQueryHandler:IRequestHandler<GetGenresListQuery,List<ExternalGenreDto>>
     {
         private readonly IExternalApiService _externalApiService;
+        private readonly MyContext _context;
 
         public GetGenreListQueryHandler(IExternalApiService externalApiService)
         {
@@ -21,7 +24,10 @@ namespace Application.Features.MediatorDesignPattern.Handlers.External_MovieApiH
 
         public async Task<List<ExternalGenreDto>> Handle(GetGenresListQuery getGenresListQuery,CancellationToken cancellationToken)
         {
-            return await _externalApiService.GetMovieList();
+            var genreList = await _externalApiService.GetGenreList();
+            return genreList;
+
+            
         }
     }
 }

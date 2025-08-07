@@ -34,7 +34,7 @@ namespace Api
             builder.Services.AddScoped<GetCategoryQueryHandler>();
             builder.Services.AddScoped<IExternalApiService, ExternalApiService>();
             builder.Services.AddHttpClient<IExternalApiService, ExternalApiService>();
-
+            
 
 
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetTagQueryHandler).Assembly));
