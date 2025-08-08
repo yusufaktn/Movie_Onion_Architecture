@@ -1,4 +1,4 @@
-﻿using Application.Features.MediatorDesignPattern.Queries.External_MovieApiQueries;
+﻿
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,18 +16,18 @@ namespace Api.Controllers.ExternalMovieApiController
             _mediator = mediator;
         }
 
-        [HttpGet("GetGenres")]
-        public async Task<IActionResult> GetGenres()
-        {
-            var genres = await _mediator.Send(new GetGenresListQuery());
-            return Ok(genres);
-        }
+        //[HttpGet("GetGenres")]
+        //public async Task<IActionResult> GetGenres()
+        //{
+        //    var genres = await _mediator.Send(new GetGenresListQuery());
+        //    return Ok(genres);
+        //}
 
-        [HttpGet("GetMovie")]
-        public async Task<IActionResult> GetMovie()
-        {
-            var movie = await _mediator.Send(new GetMovieListQuery());
-            return Ok(movie);
-        }
+        //[HttpGet("GetMovie")]
+        //public async Task<IActionResult> GetMovie()
+        //{
+        //    var movie = await _mediator.Send(new GetMovieListQuery());
+        //    return Ok(movie);
+        //}
     }
 }

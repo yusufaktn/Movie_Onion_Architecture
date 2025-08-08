@@ -22,34 +22,53 @@ namespace Persistence.Repository
             _dbSet = _mycontext.Set<T>();
         }
 
-        public Task CreateAsync(T entity)
+        public async Task AddRangeAsync(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            await _dbSet.AddRangeAsync(entities);
+            
         }
 
-        public Task DeleteAsync(T entity)
+        public async Task<bool> AnyAsync()
         {
-            throw new NotImplementedException();
+           return await _dbSet.AnyAsync();
         }
 
-        public Task<T> GetByFilterAsync(Expression<Func<T, bool>> filter)
+        public async Task CreateAsync(T entity)
         {
-            throw new NotImplementedException();
+            await _dbSet.AddAsync(entity);             
         }
 
-        public Task<T> GetByIdAsync(Guid id)
+        public async Task DeleteAsync(T entity)
         {
-            throw new NotImplementedException();
+             _dbSet.Remove(entity);
+        }
+
+        public async Task<T> GetByFilterAsync(Expression<Func<T, bool>> filter)
+        {
+          var result=  await _dbSet.FindAsync(filter);
+           return result;
+
+        }
+
+        public async Task<T> GetByIdAsync(int id)
+        {
+            var result = await _dbSet.FindAsync(id);
+            return result;
         }
 
         public Task<List<T>> GetListAsync()
         {
-            throw new NotImplementedException();
+            var result = _dbSet.ToListAsync();
+            return result;
         }
 
         public Task UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            _mycontext.Entry(entity).State = EntityState.Modified;
+            return Task.CompletedTask;      
+
         }
+
+        
     }
 }

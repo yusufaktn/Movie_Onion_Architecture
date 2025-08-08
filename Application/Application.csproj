@@ -18,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\MediatorDesignPattern\Queries\GenreQueries\" />
+    <Folder Include="Features\Seed\Result\" />
+    <Folder Include="Features\Seed\Queries\" />
     <Folder Include="Mapping\" />
   </ItemGroup>
 

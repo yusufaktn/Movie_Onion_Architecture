@@ -25,6 +25,20 @@ namespace Persistence.Context
         public DbSet<Tag> Tags{ get; set; }
         public DbSet<Genre> Genres { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<Movie>()
+                .Property(m => m.MovieId)
+                .ValueGeneratedNever();
+
+            modelBuilder.Entity<Genre>()
+                .Property(g=>g.GenreId)
+                .ValueGeneratedNever();
+
+
+            base.OnModelCreating(modelBuilder);
+        }
 
     }
 }

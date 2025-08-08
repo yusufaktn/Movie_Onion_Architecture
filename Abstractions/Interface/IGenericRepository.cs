@@ -10,10 +10,12 @@ namespace Application.Interface
     public interface IGenericRepository<T> where T : class
     {
         Task<List<T>> GetListAsync();
-        Task<T> GetByIdAsync(Guid id);
+        Task<T> GetByIdAsync(int id);
         Task<T> GetByFilterAsync(Expression<Func<T, bool>> filter); 
         Task CreateAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
+        Task AddRangeAsync(IEnumerable<T> entities);
+        Task<bool> AnyAsync();
     }
 }

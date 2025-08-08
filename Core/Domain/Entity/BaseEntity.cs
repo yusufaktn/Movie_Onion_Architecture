@@ -14,8 +14,7 @@ namespace Domain.Entity
         public bool Status { get; set; }
         public BaseEntity()
         {
-            CreatedDate = DateTime.UtcNow;
-            UpdatedDate = DateTime.UtcNow;
+            CreatedDate = DateTime.UtcNow;         
             Status = true;
         }
         public void Update()

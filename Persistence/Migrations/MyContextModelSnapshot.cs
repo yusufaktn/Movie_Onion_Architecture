@@ -95,11 +95,8 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entity.Genre", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("GenreId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -114,7 +111,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("GenreId");
 
                     b.ToTable("Genres");
                 });
@@ -122,10 +119,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entity.Movie", b =>
                 {
                     b.Property<int>("MovieId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MovieId"));
 
                     b.Property<string>("CoverImageUrl")
                         .IsRequired()
