@@ -1,4 +1,5 @@
 ﻿using Application.Features.CQRS_DesignPattern.Command.MovieCommand;
+using AutoMapper;
 using Domain.Entity;
 using Persistence.Context;
 using System;
@@ -12,25 +13,17 @@ namespace Application.Features.CQRS_DesignPattern.Handlers.MovieHandlers
     public class CreateMovieCommandHandler
     {
         private MyContext _context;
-        public CreateMovieCommandHandler(MyContext context)
+        private IMapper _mapper;
+        public CreateMovieCommandHandler(MyContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task Handle(CreateMovieCommand createMovieCommand)
         {
-            _context.Movies.Add(new Movie
-            {
-                CoverImageUrl = createMovieCommand.CoverImageUrl,
-                CreatedYear = createMovieCommand.CreatedYear,
-                Description = createMovieCommand.Description,
-                Duration = createMovieCommand.Duration,
-                Rating = createMovieCommand.Rating,
-                Title = createMovieCommand.Title,
-                ReleaseDate = createMovieCommand.ReleaseDate,
-               
-               
-            });
+            var mappingdto = _mapper.Map<Movie>(createMovieCommand);
+           _context.Movies.Add(mappingdto);
             await _context.SaveChangesAsync();
         }
 

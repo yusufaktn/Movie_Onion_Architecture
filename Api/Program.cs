@@ -4,8 +4,10 @@ using Api.Controllers.Movies;
 using Application.Features.CQRS_DesignPattern.Command.CategoryCommand;
 using Application.Features.CQRS_DesignPattern.Handlers.CategoryHandlers;
 using Application.Features.CQRS_DesignPattern.Handlers.MovieHandlers;
+using Application.Features.MediatorDesignPattern.Handlers.MovieHandlers;
 using Application.Features.MediatorDesignPattern.Handlers.TagHandlers;
 using Application.Interface;
+using Application.Mapping;
 using ExternalService.Service;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Persistence.Context;
@@ -37,6 +39,7 @@ namespace Api
             builder.Services.AddScoped<GetCategoryQueryHandler>();
             builder.Services.AddScoped<IExternalApiService, ExternalApiService>();
             builder.Services.AddHttpClient<IExternalApiService, ExternalApiService>();
+            builder.Services.AddAutoMapper(typeof(GetMovieListQueryHandler).Assembly);
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             

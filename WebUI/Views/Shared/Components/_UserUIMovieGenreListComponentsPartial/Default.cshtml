@@ -1,5 +1,5 @@
-﻿@using DTO.ExternalApiDto.Genre
-@model List<ExternalGenreDto>
+﻿@using DTO.GenreDto
+@model List<GenreDto>
 
 <div class="col-md-12 form-it">
     <label>Türler & Alt Türler</label>
@@ -8,7 +8,7 @@
             <option value="">Türleri filtrelemek için yazın</option>
             @foreach(var i in Model)
             {
-                <option value="Action1">@i.name</option>
+                <option value="Action1">@i.Name</option>
             }         
         </select>
     </div>

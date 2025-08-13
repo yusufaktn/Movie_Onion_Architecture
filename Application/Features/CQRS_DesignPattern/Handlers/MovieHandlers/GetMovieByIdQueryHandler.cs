@@ -21,21 +21,27 @@ namespace Application.Features.CQRS_DesignPattern.Handlers.MovieHandlers
         public async Task<GetMovieByIdQueryResult> Handle(GetMovieByIdQuery result)
         {
             var value = await _context.Movies.FindAsync(result.MovieId);
+            if (value == null)
+                return null;
 
             return new GetMovieByIdQueryResult
             {
-                MovieId = value.MovieId,
-                CoverImageUrl = value.CoverImageUrl,
-                CreatedYear = value.CreatedYear,
-                Description = value.Description,
-                Duration = value.Duration,
-                Rating = value.Rating,
-                ReleaseDate = value.ReleaseDate,
-                Title = value.Title
-
+                adult = value.Adult,
+                backdrop_path = value.CoverImageUrl,
+                genre_ids = value.Genre_ids,
+                id = value.MovieId,
+                original_language = value.Original_language,
+                original_title = value.Original_title,
+                overview = value.Overview,
+                popularity = value.Popularity,
+                poster_path = value.Poster_path,
+                release_date = value.Release_date,
+                title = value.Title,
+                video = false, 
+                vote_average = value.Vote_average,
+                vote_count = value.Vote_count
             };
-
-        } 
+        }
 
 
     }

@@ -12,7 +12,7 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20250808185429_mig1")]
+    [Migration("20250812145252_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -124,6 +124,9 @@ namespace Persistence.Migrations
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Adult")
+                        .HasColumnType("bit");
+
                     b.Property<string>("CoverImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -131,21 +134,32 @@ namespace Persistence.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CreatedYear")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
+                    b.PrimitiveCollection<string>("Genre_ids")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
+                    b.Property<string>("Original_language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Rating")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("Original_title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ReleaseDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Overview")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Popularity")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Poster_path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Release_date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -156,6 +170,12 @@ namespace Persistence.Migrations
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<double>("Vote_average")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Vote_count")
+                        .HasColumnType("int");
 
                     b.HasKey("MovieId");
 

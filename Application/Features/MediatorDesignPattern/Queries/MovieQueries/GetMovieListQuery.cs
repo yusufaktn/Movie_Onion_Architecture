@@ -1,4 +1,5 @@
 ﻿using DTO.ExternalApiDto.Movie;
+using DTO.MovieDto;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.MediatorDesignPattern.Queries.MovieQueries
 {
-    public class GetMovieListQuery:IRequest<List<ExternalMovieDto>>
+    public class GetMovieListQuery:IRequest<List<MovieDto>>
     {
     }
 }

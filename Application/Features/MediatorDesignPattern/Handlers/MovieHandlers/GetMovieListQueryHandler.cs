@@ -1,6 +1,8 @@
 ﻿using Abstractions.Interface;
 using Application.Features.MediatorDesignPattern.Queries.MovieQueries;
+using AutoMapper;
 using DTO.ExternalApiDto.Movie;
+using DTO.MovieDto;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,27 +12,22 @@ using System.Threading.Tasks;
 
 namespace Application.Features.MediatorDesignPattern.Handlers.MovieHandlers
 {
-    public class GetMovieListQueryHandler : IRequestHandler<GetMovieListQuery, List<ExternalMovieDto>>
+    public class GetMovieListQueryHandler : IRequestHandler<GetMovieListQuery, List<MovieDto>>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public GetMovieListQueryHandler(IUnitOfWork unitOfWork)
+        public GetMovieListQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public async Task<List<ExternalMovieDto>> Handle(GetMovieListQuery request, CancellationToken cancellationToken)
+        public async Task<List<MovieDto>> Handle(GetMovieListQuery request, CancellationToken cancellationToken)
         {
            var movieList = await _unitOfWork.MovieRepository.GetListAsync();
-            return movieList.Select(x => new ExternalMovieDto
-            {
-                id = x.MovieId,
-                title = x.Title,
-                overview =x.Description,
-                release_date = x.ReleaseDate,
-                poster_path = x.CoverImageUrl,
-                vote_average = ((double)x.Rating)
-            }).ToList();
+           var mappingdto = _mapper.Map<List<MovieDto>>(movieList);
+           return mappingdto;
 
         }
     }

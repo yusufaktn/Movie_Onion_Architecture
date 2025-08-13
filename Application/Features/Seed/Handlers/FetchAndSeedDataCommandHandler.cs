@@ -38,8 +38,7 @@ namespace Application.Features.Seed.Handlers
             var saveGenres = fromapiGenres.Select(x => new Genre
             {
                 GenreId=x.id,
-                Name=x.name,
-                CreatedDate = DateTime.Now,
+                Name=x.name,            
             });
             await _unitOfWork.GenreRepository.AddRangeAsync(saveGenres);
 
@@ -54,12 +53,20 @@ namespace Application.Features.Seed.Handlers
             {
                 MovieId=x.id,
                 Title=x.title,
-                Description = x.overview,
+                Overview = x.overview,
                 CreatedDate=DateTime.Now,
                 CoverImageUrl =x.poster_path,
-                Rating = ((decimal)x.vote_average),
-                ReleaseDate = x.release_date,
-                Duration = 0,
+                Vote_average = x.vote_average,
+                Vote_count = x.vote_count,
+                Release_date = x.release_date,
+                Adult = x.adult,
+                Genre_ids = x.genre_ids,
+                Original_language = x.original_language,
+                Original_title = x.original_title,
+                Popularity = x.popularity,
+                Poster_path = x.poster_path,
+                
+                
                 
             });
             await _unitOfWork.MovieRepository.AddRangeAsync(saveMovie);

@@ -18,19 +18,18 @@ namespace Application.Features.CQRS_DesignPattern.Handlers.MovieHandlers
 
         public async Task Handle(UpdateMovieCommand updateMovieCommand)
         {
-            var value = await _context.Movies.FindAsync(updateMovieCommand.MovieId );
+            var value = await _context.Movies.FindAsync(updateMovieCommand.MovieId);
             if( value == null ) 
             {
                 throw new Exception("Not Update");
                 
             }
-            value.Rating = updateMovieCommand.Rating;
-            value.Title = updateMovieCommand.Title;
-            value.Description = updateMovieCommand.Description;
-            value.Duration = updateMovieCommand.Duration;
-            value.CoverImageUrl = updateMovieCommand.CoverImageUrl;
-            value.CreatedYear = updateMovieCommand.CreatedYear;
-            value.ReleaseDate = updateMovieCommand.ReleaseDate;
+            value.Title = updateMovieCommand.title;
+            value.CoverImageUrl = updateMovieCommand.poster_path;
+            value.Overview = updateMovieCommand.overview;
+            value.Vote_average = updateMovieCommand.vote_average;
+            value.Vote_count = updateMovieCommand.vote_count;
+
 
             await _context.SaveChangesAsync();
 

@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entity
+namespace DTO.MovieDto
 {
-    public class Movie:BaseEntity
+    public class MovieDto
     {
         public int MovieId { get; set; }
         public bool Adult { get; set; }
-        public string CoverImageUrl { get; set; }
+        public string Backdrop_path { get; set; }
         public List<int> Genre_ids { get; set; }
         public string Original_language { get; set; }
         public string Original_title { get; set; }
@@ -21,6 +21,5 @@ namespace Domain.Entity
         public string Title { get; set; }
         public double Vote_average { get; set; }
         public int Vote_count { get; set; }
-
-    }   
+    }
 }
