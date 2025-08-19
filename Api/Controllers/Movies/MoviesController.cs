@@ -2,6 +2,8 @@
 using Application.Features.CQRS_DesignPattern.Command.MovieCommand;
 using Application.Features.CQRS_DesignPattern.Handlers.MovieHandlers;
 using Application.Features.CQRS_DesignPattern.Queries.MovieQueries;
+using Application.Features.MediatorDesignPattern.Handlers.MovieHandlers;
+using Application.Features.MediatorDesignPattern.Queries.MovieQueries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,18 +19,21 @@ namespace Api.Controllers.Movies
         private readonly UpdateMovieCommandHandler _updateMovieCommandHandler;
         private readonly GetMovieByIdQueryHandler _getMovieByIdQueryHandler;
         private readonly GetMovieQueryHandler _getMovieQueryHandler;
+        private readonly GetMovieByGenreQueryHandler _getMovieByGenreQueryHandler;
 
-        public MoviesController(CreateMovieCommandHandler createMovieCommandHandler, 
-            DeleteMovieCommandHandler deleteMovieCommandHandler, 
-            UpdateMovieCommandHandler updateMovieCommandHandler, 
-            GetMovieByIdQueryHandler getMovieByIdQueryHandler, 
-            GetMovieQueryHandler getMovieQueryHandler)
+        public MoviesController(CreateMovieCommandHandler createMovieCommandHandler,
+            DeleteMovieCommandHandler deleteMovieCommandHandler,
+            UpdateMovieCommandHandler updateMovieCommandHandler,
+            GetMovieByIdQueryHandler getMovieByIdQueryHandler,
+            GetMovieQueryHandler getMovieQueryHandler,
+            GetMovieByGenreQueryHandler getMovieByGenreQueryHandler)
         {
             _createMovieCommandHandler = createMovieCommandHandler;
             _deleteMovieCommandHandler = deleteMovieCommandHandler;
             _updateMovieCommandHandler = updateMovieCommandHandler;
             _getMovieByIdQueryHandler = getMovieByIdQueryHandler;
             _getMovieQueryHandler = getMovieQueryHandler;
+            _getMovieByGenreQueryHandler = getMovieByGenreQueryHandler;
         }
 
 
@@ -71,6 +76,18 @@ namespace Api.Controllers.Movies
             return Ok(movie);
 
         }
+
+        [HttpGet("GetMovieByGenre")]
+        public async Task<IActionResult> GetMovieByGenre([FromQuery]List<int> genre_id)
+        {
+            var response = await _getMovieByGenreQueryHandler.Handle(new GetMovieByGenreQuery(genre_id));
+            return Ok(response);
+
+        }
+
+
+
+
 
 
 

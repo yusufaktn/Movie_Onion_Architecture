@@ -24,7 +24,7 @@ namespace Api
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<MyContext>();
-            
+
 
             builder.Services.AddScoped<CreateMovieCommandHandler>();
             builder.Services.AddScoped<DeleteMovieCommandHandler>();
@@ -36,42 +36,53 @@ namespace Api
             builder.Services.AddScoped<DeleteCategoryCommandHandler>();
             builder.Services.AddScoped<UpdateCategoryCommandHandler>();
             builder.Services.AddScoped<GetCategoryByIdQueryHandler>();
+            builder.Services.AddScoped<GetMovieByGenreQueryHandler>();
+
+
+
             builder.Services.AddScoped<GetCategoryQueryHandler>();
             builder.Services.AddScoped<IExternalApiService, ExternalApiService>();
             builder.Services.AddHttpClient<IExternalApiService, ExternalApiService>();
             builder.Services.AddAutoMapper(typeof(GetMovieListQueryHandler).Assembly);
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            
-           
 
-            
+
+
+
+
+
 
 
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetTagQueryHandler).Assembly));
-            
+
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
 
-                c.SwaggerDoc("v1",new Microsoft.OpenApi.Models.OpenApiInfo
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Version = "v1",
-                    Title ="MyApi"
+                    Title = "MyApi"
                 })
 
             );
-            
+
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-               app.UseSwagger();
+                app.UseSwagger();
                 app.UseSwaggerUI(c =>
-                c.SwaggerEndpoint("/swagger/v1/swagger.json","MyApiV1")
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyApiV1");
+                    c.RoutePrefix = string.Empty;
+                }
+
+
 
                 );
 

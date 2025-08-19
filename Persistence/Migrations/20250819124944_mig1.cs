@@ -70,7 +70,6 @@ namespace Persistence.Migrations
                     MovieId = table.Column<int>(type: "int", nullable: false),
                     Adult = table.Column<bool>(type: "bit", nullable: false),
                     CoverImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Genre_ids = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Original_language = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Original_title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Overview = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -122,6 +121,67 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Tags", x => x.TagId);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "GenreMovie",
+                columns: table => new
+                {
+                    GenresGenreId = table.Column<int>(type: "int", nullable: false),
+                    MoviesMovieId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GenreMovie", x => new { x.GenresGenreId, x.MoviesMovieId });
+                    table.ForeignKey(
+                        name: "FK_GenreMovie_Genres_GenresGenreId",
+                        column: x => x.GenresGenreId,
+                        principalTable: "Genres",
+                        principalColumn: "GenreId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GenreMovie_Movies_MoviesMovieId",
+                        column: x => x.MoviesMovieId,
+                        principalTable: "Movies",
+                        principalColumn: "MovieId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MovieGenres",
+                columns: table => new
+                {
+                    MovieId = table.Column<int>(type: "int", nullable: false),
+                    GenreId = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Status = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieGenres", x => new { x.MovieId, x.GenreId });
+                    table.ForeignKey(
+                        name: "FK_MovieGenres_Genres_GenreId",
+                        column: x => x.GenreId,
+                        principalTable: "Genres",
+                        principalColumn: "GenreId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MovieGenres_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "MovieId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GenreMovie_MoviesMovieId",
+                table: "GenreMovie",
+                column: "MoviesMovieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MovieGenres_GenreId",
+                table: "MovieGenres",
+                column: "GenreId");
         }
 
         /// <inheritdoc />
@@ -134,16 +194,22 @@ namespace Persistence.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Genres");
+                name: "GenreMovie");
 
             migrationBuilder.DropTable(
-                name: "Movies");
+                name: "MovieGenres");
 
             migrationBuilder.DropTable(
                 name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "Tags");
+
+            migrationBuilder.DropTable(
+                name: "Genres");
+
+            migrationBuilder.DropTable(
+                name: "Movies");
         }
     }
 }

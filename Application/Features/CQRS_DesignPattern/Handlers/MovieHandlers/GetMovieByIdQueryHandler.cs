@@ -28,7 +28,6 @@ namespace Application.Features.CQRS_DesignPattern.Handlers.MovieHandlers
             {
                 adult = value.Adult,
                 backdrop_path = value.CoverImageUrl,
-                genre_ids = value.Genre_ids,
                 id = value.MovieId,
                 original_language = value.Original_language,
                 original_title = value.Original_title,

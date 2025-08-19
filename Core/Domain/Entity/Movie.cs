@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace Domain.Entity
 {
-    public class Movie:BaseEntity
+    public class Movie : BaseEntity
     {
+        public Movie()
+        {
+            MovieGenres = new List<MovieGenre>();
+        }
         public int MovieId { get; set; }
         public bool Adult { get; set; }
-        public string CoverImageUrl { get; set; }
-        public List<int> Genre_ids { get; set; }
+        public string CoverImageUrl { get; set; }    
         public string Original_language { get; set; }
         public string Original_title { get; set; }
         public string Overview { get; set; }
@@ -22,5 +25,8 @@ namespace Domain.Entity
         public double Vote_average { get; set; }
         public int Vote_count { get; set; }
 
+        // Navigation Properties
+        public virtual ICollection<MovieGenre> MovieGenres { get; set; } 
+        public virtual ICollection<Genre> Genres { get; set; } 
     }   
 }

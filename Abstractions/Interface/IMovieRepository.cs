@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.Interface
 {
-    public interface IMovieRepository:IGenericRepository<Movie>
+    public interface IMovieRepository : IGenericRepository<Movie>
     {
-       
+        Task<List<Movie>> GetMoviesByGenreAsync(List<int> genreIds);
+
     }
 }
