@@ -1,15 +1,30 @@
 ﻿@using DTO.GenreDto
 @model List<GenreDto>
 
-<div class="col-md-12 form-it">
-    <label>Türler & Alt Türler</label>
-    <div class="group-ip">
-        <select name="skills" multiple="" class="ui fluid dropdown">
-            <option value="">Türleri filtrelemek için yazın</option>
-            @foreach(var i in Model)
-            {
-                <option value="Action1">@i.Name</option>
-            }         
-        </select>
-    </div>
+<div class="searh-form">
+    <h4 class="sb-title">Film Ara</h4>
+    <form class="form-style-1" asp-controller="Movie" asp-action="GetMoviesByGenres" method="get">
+        <div class="row">
+            <div class="col-md-12 form-it">
+                <label>Türler</label>
+                <div class="group-ip">
+                    @* name="genreIds" Controller'daki parametre adıyla eşleşiyor *@
+                    <select name="genreIds" multiple="" class="ui fluid dropdown">
+                        <option value="">Türleri filtrelemek için seçin</option>
+                        @foreach (var i in Model)
+                        {
+                            @* value kısmında türün ID'si olmalı *@
+                            <option value="@i.GenreId">@i.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            @* Diğer filtreleme alanlarınız (Puan, Yıl vb.) buraya gelebilir *@
+
+            <div class="col-md-12 ">
+                <input class="submit" type="submit" value="Filtrele">
+            </div>
+        </div>
+    </form>
 </div>

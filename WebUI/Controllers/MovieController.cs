@@ -1,7 +1,11 @@
-﻿using DTO.ExternalApiDto.Movie;
-using DTO.MovieDto;
+﻿using DTO.MovieDto;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using WebUI.Models.ViewModels;
 
 
 namespace WebUI.Controllers
@@ -15,44 +19,80 @@ namespace WebUI.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task <IActionResult> MovieList()
+        //==============================================================
+        // 1. PUBLIC METOT: TÜM FİLMLERİ LİSTELEME
+        //==============================================================
+        public async Task<IActionResult> MovieList(int pageNumber = 1, int pageSize = 5)
         {
             ViewBag.v1 = "Film Listesi";
             ViewBag.v2 = "Ana Sayfa";
             ViewBag.v3 = "Tüm Filmler";
 
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7269/api/Movies");
-            if (response.IsSuccessStatusCode)
-            {
-                var jsondata = await response.Content.ReadAsStringAsync();
-                var value =  JsonConvert.DeserializeObject<List<MovieDto>>(jsondata);
-                return View(value);
-            }
-            return View();
+            // Ağır işi yardımcı metoda devret, genreIds olarak boş liste gönder
+            return await CreateMovieListViewModelAsync(new List<int>(), pageNumber, pageSize);
         }
-        public async Task<IActionResult> GetMoviesByGenres(string genreIds)
+
+        //==============================================================
+        // 2. PUBLIC METOT: FİLTRELENMİŞ FİLMLERİ LİSTELEME
+        //==============================================================
+        public async Task<IActionResult> GetMoviesByGenres(List<int> genreIds, int pageNumber = 1, int pageSize = 5)
         {
             ViewBag.v1 = "Film Listesi";
             ViewBag.v2 = "Ana Sayfa";
             ViewBag.v3 = "Filtrelenmiş Filmler";
 
+            // Ağır işi yardımcı metoda devret, formdan gelen genreIds'leri gönder
+            return await CreateMovieListViewModelAsync(genreIds, pageNumber, pageSize);
+        }
+
+        //==============================================================
+        // YARDIMCI (PRIVATE) METOTLAR
+        //==============================================================
+        private async Task<IActionResult> CreateMovieListViewModelAsync(List<int> genreIds, int pageNumber, int pageSize)
+        {
+            var allMovies = await GetMoviesFromApi(genreIds);
+
+            var totalMovieCount = allMovies.Count;
+            var moviesForCurrentPage = allMovies
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            var viewModel = new MovieListViewModel
+            {
+                MoviesList = moviesForCurrentPage,
+                TotalCount = totalMovieCount,
+                CurrentPage = pageNumber,
+                PageSize = pageSize,
+                TotalPages = (int)Math.Ceiling(totalMovieCount / (double)pageSize)
+            };
+
+            return View("MovieList", viewModel);
+        }
+
+        private async Task<List<MovieDto>> GetMoviesFromApi(List<int> genreIds)
+        {
             var client = _httpClientFactory.CreateClient();
+            string apiUrl;
 
-            // Kendi API'nizde tür ID'lerine göre filtreleme yapan yeni bir endpoint olduğunu varsayıyoruz.
-            // Bu endpoint'i sizin API projenizde oluşturmanız gerekiyor.
-            var url = $"https://localhost:7269/api/Movies/FilterByGenres?genreIds={genreIds}";
+            // DİKKAT: API'nizin çalıştığı port numarasını (7269) kendi projenize göre güncelleyin!
+            if (genreIds == null || !genreIds.Any())
+            {
+                apiUrl = "https://localhost:7269/api/Movies";
+            }
+            else
+            {
+                var queryString = string.Join("&", genreIds.Select(id => $"genre_id={id}"));
+                apiUrl = $"https://localhost:7269/api/Movies/GetMovieByGenre?{queryString}";
+            }
 
-            var response = await client.GetAsync(url);
+            var response = await client.GetAsync(apiUrl);
             if (response.IsSuccessStatusCode)
             {
                 var jsonData = await response.Content.ReadAsStringAsync();
-                var value = JsonConvert.DeserializeObject<List<MovieDto>>(jsonData);
-                return View("MovieList", value); // Sonucu MovieList view'ına gönderiyoruz
+                return JsonConvert.DeserializeObject<List<MovieDto>>(jsonData);
             }
-
-            return View("MovieList", new List<MovieDto>());
+            return new List<MovieDto>();
         }
-
     }
 }
