@@ -1,4 +1,4 @@
-﻿@model WebUI.Models.ViewModels.MovieListViewModel
+﻿    @model WebUI.Models.ViewModels.MovieListViewModel
 
 @{
     ViewData["Title"] = "MovieList";
@@ -28,18 +28,20 @@
 
                 @foreach (var i in Model.MoviesList)
                 {
+                    
                     <div class="movie-item-style-2">
                         <img src="@(string.IsNullOrEmpty(i.Poster_path)
                                                              ? "https://via.placeholder.com/500x750?text=No+Image"
                                                              : $"https://image.tmdb.org/t/p/w500{i.Poster_path}")"
                          alt="@i.Title">
                     <div class="mv-item-infor">
-                        <h6><a href="#">@i.Title <span>(@i.Release_date)</span></a></h6>
+                        <h6><a href="@Url.Action("MovieDetail", "Movie", new { id = i.MovieId})">@i.Title <span>(@i.Release_date)</span></a></h6>
                         <p class="rate"><i class="ion-android-star"></i><span>@i.Vote_average</span> /10</p>
                         <p class="describe">@i.Overview</p>
                     </div>
                 </div>
-                                }
+                
+                }
 
                 <div class="topbar-filter">
                     <label>Her Sayfadaki Film Sayısı:</label>

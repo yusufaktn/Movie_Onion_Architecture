@@ -75,7 +75,7 @@ namespace WebUI.Controllers
             var client = _httpClientFactory.CreateClient();
             string apiUrl;
 
-            // DİKKAT: API'nizin çalıştığı port numarasını (7269) kendi projenize göre güncelleyin!
+
             if (genreIds == null || !genreIds.Any())
             {
                 apiUrl = "https://localhost:7269/api/Movies";
@@ -94,5 +94,54 @@ namespace WebUI.Controllers
             }
             return new List<MovieDto>();
         }
+
+
+
+
+        
+        public async Task<IActionResult> MovieDetail(int id)
+        {
+            Console.WriteLine($"Gelen id:{id}");
+            var movie = await GetMovieByIdFromApi(id);
+            return View(movie);
+        }
+
+
+        private async Task<MovieDto> GetMovieByIdFromApi(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+
+            string apiUrl = $"https://localhost:7269/api/Movies/GetMovieById/{id}";
+
+            try
+            {
+                var response = await client.GetAsync(apiUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonData = await response.Content.ReadAsStringAsync();
+                    var movie = JsonConvert.DeserializeObject<MovieDto>(jsonData);
+                    return movie;
+                }
+                else
+                {
+
+                    Console.WriteLine($"API çağrısı başarısız: {response.StatusCode} - {apiUrl}");
+                    return null;
+                }
+            }
+            catch (HttpRequestException httpEx)
+            {
+
+                Console.WriteLine($"HTTP Hatası: {httpEx.Message} - {apiUrl}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Genel Hata: {ex.Message} - {apiUrl}");
+                return null;
+            }
+        }
+
     }
 }
