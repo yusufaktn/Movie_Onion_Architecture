@@ -1,0 +1,104 @@
+@using DTO.MovieDto
+@model MovieDto
+
+<div class="movie-tabs">
+    <div class="tabs">
+        <ul class="tab-links tabs-mv">
+            <li class="active"><a href="#overview">Overview</a></li>
+            <li><a href="#details">Details</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+        </ul>
+        <div class="tab-content">
+            <!-- Overview Tab -->
+            <div id="overview" class="tab active">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        @if (!string.IsNullOrEmpty(Model.Overview))
+                        {
+                            <p>@Model.Overview</p>
+                        }
+                        else
+                        {
+                            <p>No overview available for this movie.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Details Tab -->
+            <div id="details" class="tab">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="movie-details">
+                            <div class="detail-row">
+                                <div class="detail-label">Original Title:</div>
+                                <div class="detail-value">@Model.Original_title</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Release Date:</div>
+                                <div class="detail-value">@(!string.IsNullOrEmpty(Model.Release_date) ? DateTime.Parse(Model.Release_date).ToString("dd MMMM yyyy") : "N/A")</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Original Language:</div>
+                                <div class="detail-value">@Model.Original_language?.ToUpper()</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Vote Average:</div>
+                                <div class="detail-value">@Model.Vote_average.ToString("F1")/10</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Vote Count:</div>
+                                <div class="detail-value">@Model.Vote_count votes</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Popularity:</div>
+                                <div class="detail-value">@Model.Popularity.ToString("F1")</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Adult Content:</div>
+                                <div class="detail-value">@(Model.Adult ? "Yes" : "No")</div>
+                            </div>
+                            @if (!string.IsNullOrEmpty(Model.Backdrop_path))
+                            {
+                                <div class="detail-row">
+                                    <div class="detail-label">Backdrop:</div>
+                                    <div class="detail-value">
+                                        <img src="https://image.tmdb.org/t/p/w500@Model.Backdrop_path" alt="@Model.Title Backdrop" style="max-width: 300px; height: auto;">
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews Tab -->
+            <div id="reviews" class="tab">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="review-summary">
+                            <h4>User Reviews</h4>
+                            <div class="rating-summary">
+                                <div class="rating-stars">
+                                    @for (int i = 1; i <= 10; i++)
+                                    {
+                                        if (i <= Math.Round(Model.Vote_average))
+                                        {
+                                            <i class="ion-android-star"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="ion-android-star-outline"></i>
+                                        }
+                                    }
+                                </div>
+                                <p><strong>@Model.Vote_average.ToString("F1")/10</strong> based on @Model.Vote_count reviews</p>
+                            </div>
+                            <p>This movie has received @Model.Vote_count user reviews with an average rating of @Model.Vote_average.ToString("F1") out of 10.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

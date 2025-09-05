@@ -1,0 +1,66 @@
+@using DTO.MovieDto
+@model MovieDto
+
+<h1 class="bd-hd">@Model.Title 
+    <span>@(!string.IsNullOrEmpty(Model.Release_date) ? DateTime.Parse(Model.Release_date).Year.ToString() : "N/A")</span>
+</h1>
+
+<div class="social-btn">
+    <a href="#" class="parent-btn"><i class="ion-heart"></i> Add to Favorite</a>
+    <div class="hover-bnt">
+        <a href="#" class="parent-btn"><i class="ion-android-share-alt"></i>share</a>
+        <div class="hvr-item">
+            <a href="#" class="hvr-grow"><i class="ion-social-facebook"></i></a>
+            <a href="#" class="hvr-grow"><i class="ion-social-twitter"></i></a>
+            <a href="#" class="hvr-grow"><i class="ion-social-googleplus"></i></a>
+            <a href="#" class="hvr-grow"><i class="ion-social-youtube"></i></a>
+        </div>
+    </div>
+</div>
+
+<div class="movie-rate">
+    <div class="rate">
+        <i class="ion-android-star"></i>
+        <p>
+            <span>@Model.Vote_average.ToString("F1")</span> /10<br>
+            <span class="rv">@Model.Vote_count Reviews</span>
+        </p>
+    </div>
+    <div class="rate-star">
+        <p>Rate This Movie:</p>
+        @for (int i = 1; i <= 10; i++)
+        {
+            if (i <= Math.Round(Model.Vote_average))
+            {
+                <i class="ion-ios-star"></i>
+            }
+            else
+            {
+                <i class="ion-ios-star-outline"></i>
+            }
+        }
+    </div>
+</div>
+
+<div class="movie-info">
+    <div class="info-section">
+        <h6>Release Date:</h6>
+        <p>@(!string.IsNullOrEmpty(Model.Release_date) ? DateTime.Parse(Model.Release_date).ToString("dd MMMM yyyy") : "N/A")</p>
+    </div>
+    <div class="info-section">
+        <h6>Original Title:</h6>
+        <p>@Model.Original_title</p>
+    </div>
+    <div class="info-section">
+        <h6>Original Language:</h6>
+        <p>@Model.Original_language?.ToUpper()</p>
+    </div>
+    <div class="info-section">
+        <h6>Popularity:</h6>
+        <p>@Model.Popularity.ToString("F1")</p>
+    </div>
+    <div class="info-section">
+        <h6>Adult Content:</h6>
+        <p>@(Model.Adult ? "Yes" : "No")</p>
+    </div>
+</div>
