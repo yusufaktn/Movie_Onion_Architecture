@@ -1,4 +1,7 @@
-﻿<div class="movie-rate">
+﻿@using DTO.MovieDto
+@model MovieDto
+
+<div class="movie-rate">
 	<div class="rate">
 		<i class="ion-android-star"></i>
 		<p>
@@ -19,3 +22,8 @@
 		<i class="ion-ios-star-outline"></i>
 	</div>
 </div>
+
+
+<!--       Bu partial view, bir film değerlendirme bileşenini temsil eder.
+    Veritabanından gelen rate ve review sayısı dinamik olarak görüntülenebilir.
+ -->

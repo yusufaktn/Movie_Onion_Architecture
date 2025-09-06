@@ -27,30 +27,30 @@
 			<div class="col-md-8 col-sm-12 col-xs-12">
 				<div class="movie-single-ct main-content">
 					<h1 class="bd-hd">@Model.Title<span> @Model.Release_date</span></h1>
-					@await Component.InvokeAsync("_MovieDetailShareSocialMediaComponentPartial");
-					@await Component.InvokeAsync("_MovieRateComponentPartial");
+					@await Component.InvokeAsync("_MovieDetailShareSocialMediaComponentPartial", new { dto = Model });
+					@await Component.InvokeAsync("_MovieRateComponentPartial", new { dto = Model });
 					<div class="movie-tabs">
 						<div class="tabs">
 							<ul class="tab-links tabs-mv">
 								<li class="active"><a href="#overview">Overview</a></li>
 								<li><a href="#reviews"> Reviews</a></li>
-								<li><a href="#cast">  Cast & Crew </a></li>
-								<li><a href="#media"> Media</a></li>
+								@* <li><a href="#cast">  Cast & Crew </a></li>
+								<li><a href="#media"> Media</a></li> *@
 								<li><a href="#moviesrelated"> Related Movies</a></li>
 							</ul>
 							<div class="tab-content">
-								@await Component.InvokeAsync("_MovieDetailOverviewComponentPartial");
+								@await Component.InvokeAsync("_MovieOverviewComponentPartial",new {dto =Model} );
 								<div id="reviews" class="tab review">
-									@await Component.InvokeAsync("_MovieReviewsComponentPartial", new { movieDto = Model });
+									@await Component.InvokeAsync("_MovieReviewsComponentPartial", new { dto = Model });
 								</div>
-								<div id="cast" class="tab">
+								@* <div id="cast" class="tab">
 									@await Component.InvokeAsync("_MovieCastAndCrewComponentPartial", new { movieDto = Model });
 								</div>
 								<div id="media" class="tab">
-									@await Component.InvokeAsync("_MovieMediaComponentPartial", new { movieDto = Model });
-								</div>
+									@await Component.InvokeAsync("_MovieMediaComponentPartial", new { dto = Model });
+								</div> *@
 								<div id="moviesrelated" class="tab">
-									@await Component.InvokeAsync("_MovieRelatedMoviesComponentPartial", new { movieDto = Model });
+									@await Component.InvokeAsync("_MovieRelatedMoviesComponentPartial", new { dto = Model });
 								</div>
 							</div>
 						</div>
